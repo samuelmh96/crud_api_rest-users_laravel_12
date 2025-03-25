@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DocumentoController;
+use App\Http\Controllers\PermisoController;
+use App\Http\Controllers\PersonaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
@@ -22,6 +25,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //CRUD Roles
     Route::apiResource("role", RoleController::class);
+    Route::apiResource("persona", PersonaController::class);
+    Route::apiResource("permiso", PermisoController::class);
+    Route::apiResource("documento", DocumentoController::class);
 });
 
 //Auth
