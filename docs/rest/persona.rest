@@ -1,0 +1,14 @@
+GEt http://127.0.0.1:8000/api/persona
+Accept: application/json
+Authorization: Bearer 1|zaIdp9lejYkT0lvoNv8kfhalzTT8fDPby9mweX850c9732c3
+
+### Guardar Persona
+POST http://127.0.0.1:8000/api/persona
+Accept: application/json
+Authorization: Bearer 1|zaIdp9lejYkT0lvoNv8kfhalzTT8fDPby9mweX850c9732c3
+Content-Type: application/json
+
+{
+    "nombres": "Maria",
+    "apellidos": "Medrano"
+}

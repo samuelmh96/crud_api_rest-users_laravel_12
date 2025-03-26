@@ -5,8 +5,8 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "email": "sam@gmail.com",
-    "password": "123456"
+    "email": "admin@gmail.com",
+    "password": "12345678"
 }
 
 ### perfil 
@@ -18,3 +18,14 @@ Authorization: Bearer 1|EZq0VwDw1ZJZLv2E7mLlkJeLygojP2MEOTg7Obywab588c4e
 POST http://127.0.0.1:8000/api/v1/auth/logout 
 Accept: application/json 
 Authorization: Bearer 2|peaXqMI1DscJ1TJEytHUbz7AX2PTw3MhZnfy7R6r1f8e7b69
+
+### Registro
+POST http://127.0.0.1:8000/api/v1/auth/register
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "alison",
+    "email": "alison@gmail.com",
+    "password": "12345678"
+}
