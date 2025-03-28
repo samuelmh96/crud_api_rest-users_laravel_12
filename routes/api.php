@@ -15,8 +15,13 @@ Route::get('/user', function (Request $request) {
 
 
 Route::middleware('auth:sanctum')->group(function () {
-    //CRUD API REST USER
 
+    //Registrar persona con cuenta de usuario   
+    Route::post('/persona/guardar-persona-user', [PersonaController::class, 'funGuardarPersonaUser']);
+    //Asignar cuenta de user a persona
+    Route::post('/persona/{id}/adduser', [PersonaController::class, 'funAddUserPersona']);
+
+    //CRUD API REST USER
     Route::get('/user', [UserController::class, 'funListar']);
     Route::post('/user', [UserController::class, 'funGuardar']);
     Route::get('/user/{id}', [UserController::class, 'funMostrar']);
@@ -42,3 +47,8 @@ Route::prefix('/v1/auth')->group(function () {
         Route::post('/logout', [AuthController::class, 'funLogout']);
     });
 });
+
+//redirecion de no autenticado
+Route::get("/no-autorizado", function () {
+    return ["mensaje" => "No autorizado"];
+})->name("login");

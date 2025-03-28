@@ -21,17 +21,30 @@ class UserController extends Controller
 
     public function funGuardar(Request $request)
     {
-        $nombre = $request->name;
-        $correo = $request->email;
-        $password = $request->password;
+        $request->validate([
+            'name' => 'required | min:3 | string',
+            'email' => 'required | email | unique:users',
+            'password' => 'required | min:8 | string'
+        ]);
 
-        $usuario = new User();
-        $usuario->name = $nombre;
-        $usuario->email = $correo;
-        $usuario->password = $password;
-        $usuario->save();
+        try {
+            // DB::beginTransaction();// solo se usa cuando involucra mas de una tabla
+            $nombre = $request->name;
+            $correo = $request->email;
+            $password = $request->password;
 
-        return ["Mensaje" => "Usuario Registrado"];
+            $usuario = new User();
+            $usuario->name = $nombre;
+            $usuario->email = $correo;
+            $usuario->password = $password;
+            $usuario->save();
+
+            DB::commit();
+            return response()->json(["Mensaje" => "Usuario Registrado"], 201);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(["Mensaje" => "Error al registrar usuario", "Error" => $e->getMessage()], 500);
+        }
     }
 
     public function funMostrar($id)
@@ -42,24 +55,24 @@ class UserController extends Controller
 
     public function funModificar(Request $request, $id)
     {
-       $nombre = $request->name;
-       $correo = $request->email;
-       $password = $request->password;
+        $nombre = $request->name;
+        $correo = $request->email;
+        $password = $request->password;
 
-       $usuario = User::findOrFail($id);
-       $usuario->name = $nombre;
-       $usuario->email = $correo;
-       $usuario->password = $password;
-       $usuario->update();
+        $usuario = User::findOrFail($id);
+        $usuario->name = $nombre;
+        $usuario->email = $correo;
+        $usuario->password = $password;
+        $usuario->update();
 
-       return response()->json(["Mensaje" => "Usuario Modificado"], 200);
+        return response()->json(["Mensaje" => "Usuario Modificado"], 200);
     }
 
     public function funEliminar($id)
     {
         $usuario = User::findOrFail($id);
         $usuario->delete();
-        
+
         return response()->json(["Mensaje" => "Usuario Eliminado"], 200);
     }
 }
